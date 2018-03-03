@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Material;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaterialRequest extends FormRequest
+class MaterialCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,11 @@ class MaterialRequest extends FormRequest
     {
         // 如果需要返回ajax的消息，在请求中带上header'X-Requested-With','XMLHttpRequest'
         return [
-            'number' =>  'string',
-            'title' =>  'string',
+            'number' =>  'string|unique:materials,material_number',
+            'title' =>  'string|unique:materials,material_title',
             'unit' =>  'required|string',
             'count' =>  'required|integer',
-            'danger' =>  'required|integer',
+            'danger' =>  'required|integer|min:0',
             'remark' =>  'string',
         ];
     }
