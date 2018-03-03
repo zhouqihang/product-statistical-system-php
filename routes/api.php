@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
+$environment = env('APP_ENV', 'prod');
+$middleware = [];
+if ($environment === 'prod') {
+    array_push($middleware, 'auth:api');
+}
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware($middleware)->group(function () {
+    Route::get('/users', function (Request $request) {
+        return 'users';
+    });
 });
