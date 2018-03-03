@@ -25,7 +25,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware($middleware)->group(function () {
-    Route::get('/users', function (Request $request) {
-        return 'users';
-    });
+    // 获取所有materials数据
+    Route::get('/materials', 'MaterialsController@show');
+    // 新增一条materials数据
+    Route::post('/materials', 'MaterialsController@create');
 });
