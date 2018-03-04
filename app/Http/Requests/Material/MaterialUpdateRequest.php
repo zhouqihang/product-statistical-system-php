@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Material;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class MaterialCreateRequest extends FormRequest
+class MaterialUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +24,10 @@ class MaterialCreateRequest extends FormRequest
      */
     public function rules()
     {
-        // 如果需要返回ajax的消息，在请求中带上header'X-Requested-With','XMLHttpRequest'
         return [
-            'number' =>  'string|unique:materials,material_number',
-            'title' =>  'string|unique:materials,material_title',
-            'unit' =>  'required|string',
+            'number' => ['string', Rule::unique('materials', 'material_number')->ignore($this->id)],
+            'title' => ['string', Rule::unique('materials', 'material_title')->ignore($this->id)],
+            'unit' => 'required|string',
             'count' =>  'required|integer',
             'danger' =>  'required|integer|min:0',
             'remark' =>  'nullable|string',

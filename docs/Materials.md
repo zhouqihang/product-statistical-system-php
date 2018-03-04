@@ -27,3 +27,20 @@
 | remark | string | no | '' | 备注 |
 
 > tips: number和title至少必须填写一个！
+
+## GET /api/materials/query/{id}
+
+## PUT /api/materials/update/{id}
+
+| param | type | required | default | description |
+| ----- | ---- | -------- | ------- | ----------- |
+| number | string | no | '' | 原料编号 |
+| title | string | no | '' | 原料名称 |
+| unit | string | yes | '' | 原料计量单位 |
+| count | integer | yes | 0 | 原料库存量 |
+| danger | integer | yes | 0 | 原料报警数量 |
+| remark | string | no | '' | 备注 |
+
+> tips: number和title至少必须填写一个！
+
+## DELETE /api/materials/remove/{id}

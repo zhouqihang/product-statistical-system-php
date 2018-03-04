@@ -15,12 +15,12 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('material_number')->default('')->unique();
-            $table->string('material_title')->default('')->unique();
+            $table->string('material_number')->default('')->unique()->nullable();
+            $table->string('material_title')->default('')->unique()->nullable();
             $table->string('material_unit');
             $table->integer('material_danger')->default(0)->unsigned();
             $table->integer('material_count')->default(0);
-            $table->string('material_remark')->default('');
+            $table->string('material_remark')->default('')->nullable();
             $table->timestamps();
         });
     }
