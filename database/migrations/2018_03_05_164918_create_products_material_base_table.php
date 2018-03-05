@@ -13,12 +13,12 @@ class CreateProductsMaterialBaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_material_base', function (Blueprint $table) {
+        Schema::create('products_materials_base', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('material_id');
             $table->double('material', 10, 3)->default(0.00);
-            $table->string('string')->nullable();
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
     }
