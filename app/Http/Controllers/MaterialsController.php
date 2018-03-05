@@ -95,7 +95,7 @@ class MaterialsController extends Controller
             ? $material
             : response()->json([
                 'message' => 'Server Error',
-            ]);
+            ], 500);
     }
 
     /**

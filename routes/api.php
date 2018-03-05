@@ -34,5 +34,16 @@ Route::middleware($middleware)->group(function () {
     // 更新一条material数据
     Route::put('/materials/{id}', 'MaterialsController@update')->where(['id' => '[0-9]+']);
     // 删除一条material数据
-    Route::delete('materials/{id}', 'MaterialsController@remove')->where(['id' => '[0-9]+']);
+    Route::delete('/materials/{id}', 'MaterialsController@remove')->where(['id' => '[0-9]+']);
+
+    // 新增一条product数据
+    Route::post('/products', 'ProductsController@create');
+    // 查询所有product数据
+    Route::get('/products', 'ProductsController@show');
+    // 查询一条product数据
+    Route::get('/products/{id}', 'ProductsController@query')->where(['id' => '[0-9]+']);
+    // 删除一条product数据
+    Route::delete('/products/{id}', 'ProductsController@remove')->where(['id' => '[0-9]+']);
+    // 更新一条product数据
+    Route::put('/products/{id}', 'ProductsController@update')->where(['id' => '[0-9]+']);
 });
