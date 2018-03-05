@@ -28,8 +28,8 @@ class MaterialUpdateRequest extends FormRequest
             'number' => ['string', Rule::unique('materials', 'material_number')->ignore($this->id)],
             'title' => ['string', Rule::unique('materials', 'material_title')->ignore($this->id)],
             'unit' => 'required|string',
-            'count' =>  'required|integer',
-            'danger' =>  'required|integer|min:0',
+            'count' =>  'required|Numeric',
+            'danger' =>  'required|Numeric|min:0',
             'remark' =>  'nullable|string',
         ];
     }

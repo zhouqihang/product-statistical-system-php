@@ -27,7 +27,7 @@ class ProductUpdateRequest extends FormRequest
         return [
             'number' => ['string', Rule::unique('products', 'prod_number')->ignore($this->id)],
             'title' => ['string', Rule::unique('products', 'prod_title')->ignore($this->id)],
-            'count' => 'required|integer',
+            'count' => 'required|Numeric',
             'unit' => 'required|string',
             'remark' => 'string|nullable',
         ];

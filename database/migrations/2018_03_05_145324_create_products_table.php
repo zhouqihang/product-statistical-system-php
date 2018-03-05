@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('prod_number')->default('')->unique()->nullable();
             $table->string('prod_title')->default('')->unique()->nullable();
             $table->string('prod_unit');
-            $table->integer('prod_count')->default(0)->unsigned();
+            $table->double('prod_count', 10, 3)->default(0.00)->unsigned();
             $table->string('prod_remark')->default('')->nullable();
             $table->timestamps();
         });

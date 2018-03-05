@@ -26,7 +26,7 @@ class ProductCreateRequest extends FormRequest
         return [
             'number' => 'string|unique:products,prod_number',
             'title' => 'string|unique:products,prod_title',
-            'count' => 'required|integer',
+            'count' => 'required|Numeric',
             'unit' => 'required|string',
             'remark' => 'string|nullable',
         ];

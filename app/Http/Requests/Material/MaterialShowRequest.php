@@ -29,8 +29,8 @@ class MaterialShowRequest extends FormRequest
             'number' => 'string',
             'title' => 'string',
             'unit' => 'string',
-            'countBegin' => 'integer',
-            'countEnd' => 'integer',
+            'countBegin' => 'Numeric',
+            'countEnd' => 'Numeric',
             'sortField' => 'string',
             'sortord' => 'in:desc,asc'
         ];

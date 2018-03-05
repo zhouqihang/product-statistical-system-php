@@ -18,8 +18,8 @@ class CreateMaterialsTable extends Migration
             $table->string('material_number')->default('')->unique()->nullable();
             $table->string('material_title')->default('')->unique()->nullable();
             $table->string('material_unit');
-            $table->integer('material_danger')->default(0)->unsigned();
-            $table->integer('material_count')->default(0);
+            $table->double('material_danger', 10, 3)->default(0.00)->unsigned();
+            $table->double('material_count', 10, 3)->default(0.00);
             $table->string('material_remark')->default('')->nullable();
             $table->timestamps();
         });

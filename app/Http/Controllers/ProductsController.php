@@ -20,7 +20,7 @@ class ProductsController extends Controller
         $product->prod_title = $request->input('title', '');
         $product->prod_number = $request->input('number', '');
         $product->prod_unit = $request->input('unit', '');
-        $product->prod_count = $request->input('count', 0);
+        $product->prod_count = $request->input('count', 0.00);
         $product->prod_remark = $request->input('remark', '');
         return $product;
     }

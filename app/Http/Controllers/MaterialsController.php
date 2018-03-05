@@ -53,8 +53,8 @@ class MaterialsController extends Controller
         $material->material_number =  $request->input('number', '');
         $material->material_title =  $request->input('title', '');
         $material->material_unit =  $request->input('unit', '');
-        $material->material_count =  $request->input('count', 0);
-        $material->material_danger =  $request->input('danger', 0);
+        $material->material_count =  $request->input('count', 0.00);
+        $material->material_danger =  $request->input('danger', 0.00);
         $material->material_remark =  $request->input('remark', '');
         return $material;
     }
