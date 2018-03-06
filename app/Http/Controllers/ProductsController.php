@@ -57,11 +57,26 @@ class ProductsController extends Controller
         $product = new Product();
         $product = $this->initProductByRequest($product, $request);
         $product->save();
+        $materialsInfo = $request->input('materials', []);
+        $materialsArray = [];
+        foreach ($materialsInfo as $v) {
+            array_push($materialsArray, [
+                'product_id' => $product->id,
+                'material_id' => $v['id'],
+                'material' => $v['count'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        ProductsMaterialsBaseController::create($materialsArray);
+        $product->materials = $product->getMaterials();
         return $product;
     }
 
     public function query(int $id) {
-        return Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+        $product->materials = $product->getMaterials();
+        return $product;
     }
 
     public function remove(int $id) {
