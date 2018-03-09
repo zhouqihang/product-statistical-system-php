@@ -12,11 +12,12 @@ class Product extends Model
 
     public function getMaterials() {
         return $this->materials()->get([
-            'materials.id',
+            'materials.id as material_id',
             'material_number',
             'material_title',
             'material',
             'remark',
+            'products_materials_base.id',
             'products_materials_base.created_at',
             'products_materials_base.updated_at',
         ]);

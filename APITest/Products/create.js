@@ -6,14 +6,14 @@ const {post} = require('../request');
 const {host} = require('../config');
 
 const params = {
-    number: 'P-001',
-    title: '冰糖雪梨',
+    number: 'P-002',
+    title: '冰糖雪梨改良',
     unit: '瓶',
     count: 500,
-    remark: '统一冰糖雪梨',
+    remark: '统一冰糖雪梨第二代',
     materials: [
         {id: 1, count: 20, remark: ''},
-        {id: 2, count: 8, remark: ''},
+        {id: 4, count: 8, remark: ''},
         {id: 3, count: 5, remark: ''},
     ]
 };

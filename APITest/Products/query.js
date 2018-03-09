@@ -5,7 +5,7 @@
 const {get} = require('../request');
 const {host} = require('../config');
 
-get(`${host}/products/3`, {}, res => {
+get(`${host}/products/8`, {}, res => {
     console.log(res);
 }, err => {
     console.log(err);

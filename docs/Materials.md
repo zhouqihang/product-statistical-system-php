@@ -1,6 +1,6 @@
 # Materials
 
-## GET /api/materials/show
+## GET /api/materials
 
 | param | type | required | default | description |
 | ----- | ---- | -------- | ------- | ----------- |
@@ -15,7 +15,7 @@
 | sortord | string | no | desc | 排序方式，可选有`asc` |
 
 
-## POST /api/materials/create
+## POST /api/materials
 
 | param | type | required | default | description |
 | ----- | ---- | -------- | ------- | ----------- |
@@ -28,9 +28,9 @@
 
 > tips: number和title至少必须填写一个！
 
-## GET /api/materials/query/{id}
+## GET /api/materials/{id}
 
-## PUT /api/materials/update/{id}
+## PUT /api/materials/{id}
 
 | param | type | required | default | description |
 | ----- | ---- | -------- | ------- | ----------- |
@@ -43,4 +43,4 @@
 
 > tips: number和title至少必须填写一个！
 
-## DELETE /api/materials/remove/{id}
+## DELETE /api/materials/{id}
