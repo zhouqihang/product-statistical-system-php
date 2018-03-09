@@ -6,12 +6,12 @@ const {post} = require('../request');
 const {host} = require('../config');
 
 const params = {
-    number: 'M-002',
-    title: '纯净水',
-    unit: 'L',
+    number: 'M-004',
+    title: '食品添加剂',
+    unit: 'g',
     danger: 300,
     count: 10000,
-    remark: '纯净水',
+    remark: '食品添加剂',
 };
 
 post(`${host}/materials`, params, res => {

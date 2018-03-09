@@ -6,6 +6,7 @@ use App\Http\Requests\Product\ProductCreateRequest;
 use App\Http\Requests\Product\ProductShowRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Product;
+use App\ProductsMaterialsBase;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -54,21 +55,32 @@ class ProductsController extends Controller
     }
 
     public function create(ProductCreateRequest $request) {
+        // 获取原料信息
+        $materialsInfo = $request->input('materials', []);
+        if (!is_array($materialsInfo)) {
+            return response()->json(['message' => 'Materials must be a list'], 404);
+        }
+        if (count($materialsInfo) == 0) {
+            return response()->json(['message' => 'Materials is required'], 404);
+        }
+        // 创建product
         $product = new Product();
         $product = $this->initProductByRequest($product, $request);
         $product->save();
-        $materialsInfo = $request->input('materials', []);
+        // 添加materials
         $materialsArray = [];
         foreach ($materialsInfo as $v) {
             array_push($materialsArray, [
                 'product_id' => $product->id,
                 'material_id' => $v['id'],
                 'material' => $v['count'],
+                'remark' => $v['remark'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
         }
         ProductsMaterialsBaseController::create($materialsArray);
+        // return product
         $product->materials = $product->getMaterials();
         return $product;
     }
@@ -80,7 +92,10 @@ class ProductsController extends Controller
     }
 
     public function remove(int $id) {
-        return Product::destroy($id) > 0
+        $product = Product::find($id);
+        $res = $product->delete();
+        ProductsMaterialsBase::where('product_id', '=', $product->id)->delete();
+        return $res
             ? response()->json(['message' => 'Delete Successful'])
             : response()->json(['message' => 'Delete failed'], 404);
     }

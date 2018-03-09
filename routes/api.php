@@ -46,4 +46,9 @@ Route::middleware($middleware)->group(function () {
     Route::delete('/products/{id}', 'ProductsController@remove')->where(['id' => '[0-9]+']);
     // 更新一条product数据
     Route::put('/products/{id}', 'ProductsController@update')->where(['id' => '[0-9]+']);
+
+    // 新增一条product material base Relationship
+    Route::post('/pmb/create', 'ProductsMaterialsBaseController@add');
+    Route::patch('/pmb/{id}', 'ProductsMaterialsBaseController@update')->where(['id' => '[0-9]+']);
+    Route::delete('/pmb/{id}', 'ProductsMaterialsBaseController@remove')->where(['id' => '[0-9]+']);
 });

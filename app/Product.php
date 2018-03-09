@@ -16,7 +16,7 @@ class Product extends Model
             'material_number',
             'material_title',
             'material',
-            'string',
+            'remark',
             'products_materials_base.created_at',
             'products_materials_base.updated_at',
         ]);

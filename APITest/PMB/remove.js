@@ -5,7 +5,7 @@
 const {remove} = require('../request');
 const {host} = require('../config');
 
-remove(`${host}/products/6`, {}, res => {
+remove(`${host}/pmb/7`, {}, res => {
     console.log(res);
 }, err => {
     console.log(err);
