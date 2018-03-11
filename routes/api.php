@@ -51,4 +51,11 @@ Route::middleware($middleware)->group(function () {
     Route::post('/pmb/create', 'ProductsMaterialsBaseController@add');
     Route::patch('/pmb/{id}', 'ProductsMaterialsBaseController@update')->where(['id' => '[0-9]+']);
     Route::delete('/pmb/{id}', 'ProductsMaterialsBaseController@remove')->where(['id' => '[0-9]+']);
+
+    // 新增一条task
+    Route::post('/tasks', 'TasksController@create');
+    Route::get('/tasks/test', 'TasksController@test');
+
+    // 新增一条task info
+    Route::post('/tasks/{id}/info', 'TaskInfosController@create');
 });

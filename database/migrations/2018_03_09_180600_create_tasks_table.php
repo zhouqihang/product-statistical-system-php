@@ -16,8 +16,10 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->unique();
-            $table->enum('status', ['waiting', 'underway', 'postpone', 'closed', 'complete'])->default('underway');
+            $table->enum('status', ['editing', 'waiting', 'underway', 'postpone', 'closed', 'complete'])->default('underway');
             $table->string('remark')->nullable()->default('');
+            $table->timestamp('begin_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->timestamps();
         });
     }

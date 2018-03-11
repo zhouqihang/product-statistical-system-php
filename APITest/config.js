@@ -1,3 +1,3 @@
 module.exports = {
-    host: 'http://homestead.prod/api'
+    host: 'http://homestead.prod.com/api'
 };
