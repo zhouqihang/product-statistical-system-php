@@ -35,6 +35,8 @@ Route::middleware($middleware)->group(function () {
     Route::put('/materials/{id}', 'MaterialsController@update')->where(['id' => '[0-9]+']);
     // 删除一条material数据
     Route::delete('/materials/{id}', 'MaterialsController@remove')->where(['id' => '[0-9]+']);
+    // 获取materials list
+    Route::get('/materials/lists', 'MaterialsController@lists');
 
     // 新增一条product数据
     Route::post('/products', 'ProductsController@create');
@@ -46,6 +48,8 @@ Route::middleware($middleware)->group(function () {
     Route::delete('/products/{id}', 'ProductsController@remove')->where(['id' => '[0-9]+']);
     // 更新一条product数据
     Route::put('/products/{id}', 'ProductsController@update')->where(['id' => '[0-9]+']);
+    // 获取materials list
+    Route::get('/products/lists', 'ProductsController@lists');
 
     // 新增一条product material base Relationship
     Route::post('/pmb/create', 'ProductsMaterialsBaseController@add');
@@ -54,7 +58,12 @@ Route::middleware($middleware)->group(function () {
 
     // 新增一条task
     Route::post('/tasks', 'TasksController@create');
-    Route::get('/tasks/test', 'TasksController@test');
+    Route::get('/tasks', 'TasksController@show');
+    Route::get('/tasks/{id}', 'TasksController@query')->where(['id' => '[0-9]+']);
+    Route::get('/tasks/status', 'TasksController@getStatus');
+    Route::patch('/tasks/{id}/status', 'TasksController@status');
+    Route::put('/tasks/{id}', 'TasksController@update')->where(['id' => '[0-9]+']);
+//    Route::delete('tasks/{id}', 'TasksController@remove')->where(['id' => '[0-9]+']);
 
     // 新增一条task info
     Route::post('/tasks/{id}/info', 'TaskInfosController@create');

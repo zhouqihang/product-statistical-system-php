@@ -110,4 +110,8 @@ class ProductsController extends Controller
                 'message' => 'Server Error',
             ], 500);
     }
+
+    public function lists() {
+        return Product::all(['id', 'prod_title']);
+    }
 }

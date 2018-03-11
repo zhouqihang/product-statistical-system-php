@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Task\TaskCreateRequest;
+use App\Http\Requests\Task\TaskShowRequest;
+use App\Http\Requests\Task\TaskUpdateRequest;
 use App\Task;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
@@ -25,74 +26,74 @@ class TasksController extends Controller
         return $task;
     }
 
-    public function create1(TaskCreateRequest $request) {
+    public function show(TaskShowRequest $request) {
+        $pagesize = $request->input('pagesize', 10);
+        $task_title = $request->input('title', '');
+        $task_status = $request->input('status', '');
+        $task_begin_time = $request->input('beginTime', '');
+        $task_end_time = $request->input('endTime', '');
+        $product_sort_field = $request->input('sortField', 'created_at');
+        $product_sortord = $request->input('sortord', 'desc');
+        $query = [];
+
+        if ($task_title) {
+            array_push($query, ['title', 'like', '%'.$task_title.'%']);
+        }
+        if ($task_status) {
+            array_push($query, ['status', '=', '%'.$task_status.'%']);
+        }
+        if ($task_begin_time) {
+            array_push($query, ['begin_time', '>=', '%'.$task_begin_time.'%']);
+        }
+        if ($task_end_time) {
+            array_push($query, ['end_time', '<=', $task_end_time]);
+        }
+
+        return Task::where($query)->orderBy($product_sort_field, $product_sortord)->paginate($pagesize);
+    }
+
+    public function query(Request $request, int $id) {
+        $task = Task::findOrFail($id);
+        $task->taskInfos;
+        $task->taskInfos->each(function ($taskInfo) {
+            $taskInfo->PMRs;
+        });
+        return $task;
+    }
+
+    public function update(TaskUpdateRequest $request, int $id) {
         $task_title = $request->input('title', '');
         $task_status = $request->input('status', array_keys(Task::$status)[0]);
         $task_remark = $request->input('remark', '');
-        $products = $request->input('products', []);
 
-        // if not have products, return
-        if (!is_array($products) || count($products) === 0) {
-            return response()->json(['message' => 'products is required, it must be a list'], 404);
+        $task = Task::findOrFail($id);
+        $task->title = $task_title;
+        $task->status = $task_status;
+        $task->remark = $task_remark;
+        $task->save();
+
+        return $task;
+    }
+
+    public function remove(Request $request, int $id) {
+        return Task::destroy($id) > 0
+            ? response()->json(['message' => 'Delete Successful'])
+            : response()->json(['message' => 'Delete failed'], 404);
+    }
+
+    public function status(Request $request, int $id) {
+        $status = $request->input('status');
+        if (!in_array($status, array_keys(Task::$status))) {
+            return response()->json(['message' => 'status is not allowed'], 404);
         }
+        $task = Task::findOrFail($id);
+        $task->status = $status;
+        $task->save();
 
-        $task = [
-            'title' => $task_title,
-            'status' => $task_status,
-            'remark' => $task_remark,
-            'created_at' => date('Y-m-d H:i:d'),
-            'updated_at' => date('Y-m-d H:i:d'),
-        ];
+        return $task;
+    }
 
-        DB::transaction(function () use ($task, $products)  {
-            // create task
-            $task_id = DB::table('tasks')->insertGetId($task);
-
-            // create task info
-            foreach($products as $product) {
-                $task_info_id = DB::table('task_infos')->insertGetId([
-                    'task_id' => $task_id,
-                    'product_id' => $product['id'],
-                    'remark' => $product['remark'],
-                    'created_at' => date('Y-m-d H:i:d'),
-                    'updated_at' => date('Y-m-d H:i:d'),
-                ]);
-
-                // if materials create
-                // if materials is not an array, use default config
-                $materials = $products['materials'] ?? [];
-
-                if (!is_array($materials) || count($materials)) {
-
-                    // use default config
-                    $materials_config = DB::table('products_materials_base')->where('product_id', $product['id'])->get();
-                    foreach ($materials_config as $material_config) {
-                        DB::table('products_materials_real')->insert([
-                            'task_info_id' => $task_info_id,
-                            'material_id' => $material_config->material_id,
-                            'material' => $material_config->material,
-                            'remark' => $material_config->remark,
-                            'created_at' => date('Y-m-d H:i:d'),
-                            'updated_at' => date('Y-m-d H:i:d'),
-                        ]);
-                    }
-                }
-                else {
-                    // use input config
-                    foreach ($materials as $material) {
-                        DB::table('products_materials_real')->insert([
-                            'task_info_id' => $task_info_id,
-                            'material_id' => $material['id'],
-                            'material' => $material['count'],
-                            'remark' => $material['remark'],
-                            'created_at' => date('Y-m-d H:i:d'),
-                            'updated_at' => date('Y-m-d H:i:d'),
-                        ]);
-                    }
-                }
-            }
-        }, 5);
-
-        return Task::where('title', $task_title)->first();
+    public function getStatus() {
+        return Task::$status;
     }
 }

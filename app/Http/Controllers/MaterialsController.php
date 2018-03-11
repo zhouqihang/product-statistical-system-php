@@ -109,4 +109,8 @@ class MaterialsController extends Controller
             : response()->json(['message' => 'Delete failed'], 404);
 
     }
+
+    public function lists() {
+        return Material::all(['id', 'material_title']);
+    }
 }
